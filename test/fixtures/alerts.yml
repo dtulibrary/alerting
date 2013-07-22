@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: 
+  query: MyString
+  user: MyString
+  alert_type: MyString
+  frequency: 1
+
+two:
+  name: 
+  query: MyString
+  user: MyString
+  alert_type: MyString
+  frequency: 1
