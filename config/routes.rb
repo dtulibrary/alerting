@@ -1,5 +1,7 @@
 Keikoku::Application.routes.draw do
-  resources :alerts, except: [:new, :edit]
+  resources :alerts, except: [:new, :edit] do
+    resources :alert_stats, only: [:index]
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

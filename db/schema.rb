@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130722140450) do
+ActiveRecord::Schema.define(:version => 20130723122326) do
+
+  create_table "alert_stats", :force => true do |t|
+    t.datetime "last_run"
+    t.integer  "count"
+    t.integer  "alert_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "alert_stats", ["alert_id"], :name => "index_alert_stats_on_alert_id"
 
   create_table "alerts", :force => true do |t|
     t.string   "name"
