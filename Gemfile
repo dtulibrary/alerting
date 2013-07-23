@@ -3,7 +3,16 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.12'
 
 gem 'rails-api'
+
 gem 'sqlite3'
+
+group :development, :test do
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'factory_girl_rails'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
