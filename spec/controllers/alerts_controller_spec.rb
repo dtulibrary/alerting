@@ -21,8 +21,9 @@ describe AlertsController, :type => :controller do
       it "lists all alerts for a user" do
         alerts = JSON.parse(response.body)
         alerts.all? do |a|
-          a.last["user"] == "1234"
+          a["alert"]["user"] == "1234"
         end.should be_true
+        alerts.size.should == 2
       end
     end
   end
