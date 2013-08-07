@@ -12,7 +12,7 @@ describe AlertsController, :type => :controller do
 
     context "list a users alerts" do
       before do
-        get :index, user: 1234
+        get :index, user_id: 1234
         response.body
       end
 
@@ -21,7 +21,7 @@ describe AlertsController, :type => :controller do
       it "lists all alerts for a user" do
         alerts = JSON.parse(response.body)
         alerts.all? do |a|
-          a["alert"]["user"] == "1234"
+          a["alert"]["user_id"] == "1234"
         end.should be_true
         alerts.size.should == 2
       end
@@ -38,7 +38,7 @@ describe AlertsController, :type => :controller do
             :query => "chocolate AND cake AND ",
             :frequency => 1,
             :alert_type => "journal",
-            :user => "1234"
+            :user_id => "1234"
           }
         }
 
@@ -60,7 +60,7 @@ describe AlertsController, :type => :controller do
           :alert => {
             :query => "chocolate AND cake",
             :frequency => 1,            
-            :user => "1234"
+            :user_id => "1234"
           }
         }
 
@@ -87,7 +87,7 @@ describe AlertsController, :type => :controller do
         :alert => {
           :query => "issn:16838602",
           :frequency => 3,            
-          :user => "4321",
+          :user_id => "4321",
           :name => "my journal alert"
         }
       }

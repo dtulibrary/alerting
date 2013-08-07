@@ -19,6 +19,3 @@ test:
   database: db/test.sqlite3
   pool: 5
   timeout: 5000
-
-<%= file = File.join("config", "database.local.yml")
-IO.read(file) if File.exist?(file) %>

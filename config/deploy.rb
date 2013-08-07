@@ -40,7 +40,7 @@ end
 
 # tasks
 
-after "deploy:update", "config:symlink"
+before "deploy:finalize_update", "config:symlink"
 after "deploy:update", "deploy:cleanup"
 
 namespace :config do

@@ -2,7 +2,7 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.json
   def index
-    @alerts = Alert.where("user = ?", params[:user])
+    @alerts = Alert.where("user_id = ?", params[:user_id])
     render json: @alerts
   end
 

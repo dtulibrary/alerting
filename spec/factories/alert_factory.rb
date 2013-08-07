@@ -4,7 +4,7 @@ FactoryGirl.define do
     query "chocolate"
     frequency 1 
     alert_type "search" 
-    user "1234"
+    user_id "1234"
   end
 
   factory :alert2, class: Alert do
@@ -12,13 +12,13 @@ FactoryGirl.define do
     query "chocolate AND cake"
     frequency 2
     alert_type "search" 
-    user "1234"
+    user_id "1234"
   end
 
   factory :alert3, class: Alert do
     query "issn:16838602"
     frequency 3 
     alert_type "journal" 
-    user "4321"
+    user_id "4321"
   end
 end
