@@ -1,13 +1,12 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-
 gem 'rails-api'
-
-gem 'sqlite3'
+gem 'pg'
 
 group :development, :test do
   gem 'rspec-rails'
+gem 'sqlite3'
 end
 
 group :test do
@@ -24,7 +23,7 @@ end
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano', :group => :development
+gem 'capistrano', :group => :development
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
