@@ -14,6 +14,17 @@ class AlertsController < ApplicationController
     render json: @alert
   end
 
+  # GET /alerts/find
+  # GET alerts/find.json
+  def find
+    @alert = Alert.where(user_id: params[:user_id], query: params[:query]).first
+    if @alert
+      render json: @alert
+    else
+      render json: nil, status: 404     
+    end
+  end
+
   # POST /alerts
   # POST /alerts.json
   def create
@@ -46,4 +57,5 @@ class AlertsController < ApplicationController
 
     head :no_content
   end
+
 end

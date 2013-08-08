@@ -16,7 +16,7 @@ FactoryGirl.define do
   end
 
   factory :alert3, class: Alert do
-    query "issn:16838602"
+    query "16838602"
     frequency 3 
     alert_type "journal" 
     user_id "4321"

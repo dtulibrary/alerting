@@ -116,4 +116,30 @@ describe AlertsController, :type => :controller do
       Alert.find_by_id(id).should be_nil
     end
   end
+
+  describe "#find" do
+    
+    context "it finds the alert" do
+
+      before do
+        get :find, user_id: 4321, query: "16838602"
+      end
+
+      it { response.response_code.should == 200 }
+
+      it "returns the alert" do
+        alert = JSON.parse(response.body)
+        alert["alert"]["alert_type"].should eq "journal"
+      end
+
+    end
+
+    context "it does not find the alert" do
+      before do
+        get :find, user_id: 1234, query: "ladida"        
+      end
+
+      it { response.response_code.should == 404 }
+    end
+  end
 end
