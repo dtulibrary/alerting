@@ -2,7 +2,18 @@ class AlertsController < ApplicationController
   # GET /alerts
   # GET /alerts.json
   def index
-    @alerts = Alert.where("user_id = ?", params[:user_id])
+    @alerts = []
+    if params[:user_id]
+      if params[:alert_type] && params[:alert_type] == "journal"
+        @alerts = Alert.journals(params[:user_id])
+      elsif params[:alert_type] && params[:alert_type] == "search"
+        @alerts = Alert.searches(params[:user_id])
+      else
+        @alerts = Alert.for_user(params[:user_id])
+      end
+    else
+      @alerts = Alert.all
+    end
     render json: @alerts
   end
 
@@ -16,12 +27,16 @@ class AlertsController < ApplicationController
 
   # GET /alerts/find
   # GET alerts/find.json
-  def find
-    @alert = Alert.where(user_id: params[:user_id], query: params[:query]).first
-    if @alert
-      render json: @alert
+  def find    
+    if(!params["find"].nil?)
+      @alert = Alert.where(params["find"]).first
+      if @alert
+        render json: @alert
+      else
+        render json: nil, status: :not_found
+      end
     else
-      render json: nil, status: 404     
+      render json: nil, status: :not_found
     end
   end
 

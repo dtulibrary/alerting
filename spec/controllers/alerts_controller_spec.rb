@@ -122,7 +122,7 @@ describe AlertsController, :type => :controller do
     context "it finds the alert" do
 
       before do
-        get :find, user_id: 4321, query: "16838602"
+        get :find, {:find => {:user_id => 4321, :query => "16838602"}}
       end
 
       it { response.response_code.should == 200 }
