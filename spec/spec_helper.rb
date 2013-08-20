@@ -1,3 +1,17 @@
+require 'simplecov'
+require 'simplecov-html'
+require 'simplecov-rcov'
+
+class SimpleCov::Formatter::MergedFormatter
+  def format(result)
+     SimpleCov::Formatter::HTMLFormatter.new.format(result)
+     SimpleCov::Formatter::RcovFormatter.new.format(result)
+  end
+end
+
+require 'simplecov'
+SimpleCov.start 'rails'
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)

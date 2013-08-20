@@ -36,6 +36,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
+    chronic (0.9.1)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     factory_girl (4.2.0)
@@ -103,6 +104,12 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
+    simplecov-rcov (0.2.3)
+      simplecov (>= 0.4.1)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -115,6 +122,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    whenever (0.8.4)
+      activesupport (>= 2.3.4)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
@@ -126,4 +136,8 @@ DEPENDENCIES
   rails (= 3.2.12)
   rails-api
   rspec-rails
+  simplecov
+  simplecov-html
+  simplecov-rcov
   sqlite3
+  whenever
