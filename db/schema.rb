@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130818162635) do
+ActiveRecord::Schema.define(:version => 20130822111555) do
 
   create_table "alert_stats", :force => true do |t|
     t.datetime "last_run"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(:version => 20130818162635) do
 
   create_table "alerts", :force => true do |t|
     t.string   "name"
-    t.string   "query"
+    t.text     "query"
     t.string   "user_id"
     t.string   "alert_type"
     t.integer  "frequency"
