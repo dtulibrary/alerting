@@ -7,6 +7,11 @@ set :rails_env, ENV['RAILS_ENV'] || 'unstable'
 set :application, ENV['HOST'] || 'keikoku.vagrant.vm'
 set :toshokan_config, ENV['TOSHOKAN_CONFIG'] || "#{rails_env}"
 
+set :stage, "#{rails_env}"
+set :whenever_command, "bundle exec whenever"
+set :whenever_environment, defer { stage }
+require "whenever/capistrano"
+
 set :deploy_to, "/var/www/#{application}"
 role :web, "#{application}"
 role :app, "#{application}"
@@ -47,6 +52,7 @@ namespace :config do
   desc "linking configuration to current release"
   task :symlink do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+    run "ln -nfs #{deploy_to}/shared/config/application.local.rb #{release_path}/config/application.local.rb"
   end
 end
 

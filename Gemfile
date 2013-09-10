@@ -4,6 +4,8 @@ gem 'rails', '3.2.12'
 gem 'rails-api'
 gem 'pg'
 gem 'whenever', :require => false
+gem 'httparty'
+gem "rsolr"
 
 group :development, :test do
   gem 'rspec-rails'
@@ -15,6 +17,7 @@ group :test do
   gem 'simplecov', :require => false
   gem 'simplecov-html', :require => false
   gem 'simplecov-rcov', :require => false
+  gem 'webmock'
 end
 
 # Deploy with Capistrano

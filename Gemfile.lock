@@ -28,6 +28,7 @@ GEM
     activesupport (3.2.12)
       i18n (~> 0.6)
       multi_json (~> 1.0)
+    addressable (2.3.5)
     arel (3.0.2)
     builder (3.0.4)
     capistrano (2.15.5)
@@ -37,6 +38,8 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
     chronic (0.9.1)
+    crack (0.4.1)
+      safe_yaml (~> 0.9.0)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     factory_girl (4.2.0)
@@ -46,6 +49,9 @@ GEM
       railties (>= 3.0.0)
     highline (1.6.19)
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     i18n (0.6.4)
     journey (1.0.4)
     json (1.8.0)
@@ -55,6 +61,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.7)
+    multi_xml (0.5.5)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -93,6 +100,8 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rsolr (1.0.9)
+      builder (>= 2.1.2)
     rspec-core (2.14.4)
     rspec-expectations (2.14.0)
       diff-lcs (>= 1.1.3, < 2.0)
@@ -104,6 +113,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    safe_yaml (0.9.5)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -122,6 +132,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    webmock (1.13.0)
+      addressable (>= 2.2.7)
+      crack (>= 0.3.2)
     whenever (0.8.4)
       activesupport (>= 2.3.4)
       chronic (>= 0.6.3)
@@ -132,12 +145,15 @@ PLATFORMS
 DEPENDENCIES
   capistrano
   factory_girl_rails
+  httparty
   pg
   rails (= 3.2.12)
   rails-api
+  rsolr
   rspec-rails
   simplecov
   simplecov-html
   simplecov-rcov
   sqlite3
+  webmock
   whenever

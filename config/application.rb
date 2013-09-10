@@ -58,5 +58,26 @@ module Keikoku
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.user = {
+      :url => 'http://localhost'
+    }
+
+    config.solr = {
+      :url => 'http://localhost',      
+      :rows => 50,
+      :qt => '/toshokan'
+    }
+
+    config.send_it = {
+      :url => 'http://localhost',
+      :subject_prefix => "",
+      :test_mode => true
+    }
+
+    config.find_it = {
+      :url => 'http://localhost'
+    }
+
   end
 end

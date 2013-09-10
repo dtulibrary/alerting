@@ -2,4 +2,14 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  facet_field_labels:
+    author_facet: 'Author'
+    format: 'Type'
+    journal_title_facet: 'Journal Title'
+    pub_date_tsort: 'Publication Year'
+  search_field_labels:
+    author: 'Author'
+    journal_title: 'Journal title'
+    numbers: 'ISSN, ISBN or other numbers'
+    subject: 'Keyword'
+    title: 'Title'
