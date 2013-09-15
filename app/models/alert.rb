@@ -130,7 +130,7 @@ class Alert < ActiveRecord::Base
     if ActiveRecord::Base.connection.adapter_name == "SQLite"
       "datetime(CURRENT_TIMESTAMP, '-' || frequency || ' days')"
     else
-      "(CURRENT_TIMESTAMP - interval frequency || ' days')"
+      "(CURRENT_TIMESTAMP - frequency * interval '1 day')"
     end
   end
 end
