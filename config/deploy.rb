@@ -11,6 +11,9 @@ set :stage, "#{rails_env}"
 set :whenever_command, "bundle exec whenever"
 set :whenever_environment, defer { stage }
 require "whenever/capistrano"
+require 'whenever/capistrano/recipes'
+after 'deploy:create_symlink', 'whenever:update_crontab'
+after 'deploy:rollback', 'whenever:update_crontab'
 
 set :deploy_to, "/var/www/#{application}"
 role :web, "#{application}"
