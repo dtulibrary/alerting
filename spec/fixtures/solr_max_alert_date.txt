@@ -8,4 +8,4 @@ Content-Type: text/plain;charset=UTF-8
 Transfer-Encoding: chunked
 Date: Thu, 12 Sep 2013 12:22:38 GMT
 
-{'responseHeader'=>{'status'=>0,'QTime'=>11,'params'=>{'facet'=>'false','fl'=>'alert_timestamp_dt','sort'=>'alert_timestamp_dt desc','q'=>'*:*','wt'=>'ruby','rows'=>'1'}},'response'=>{'numFound'=>248723844,'start'=>0,'docs'=>[{'alert_timestamp_dt'=>'2013-08-27T22:00:10Z'}]}}
+{'responseHeader'=>{'status'=>0,'QTime'=>11,'params'=>{'facet'=>'false','fl'=>'alert_timestamp_dt','sort'=>'alert_timestamp_dt desc','q'=>'*:*','wt'=>'ruby','rows'=>'1'}},'response'=>{'numFound'=>248723844,'start'=>0,'docs'=>[{'alert_timestamp_dt'=>'2013-09-12T22:00:10Z'}]}}

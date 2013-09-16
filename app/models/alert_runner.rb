@@ -26,37 +26,43 @@ class AlertRunner
         
         if user.email.nil?  
           Rails.logger.warn "Email missing for #{alert.inspect}"
-        else        
-          last_run = alert.last_run        
-          response = solr.query(alert.solr_query, alert.alert_type, user.type, last_run, run_to)
-          hit_count = response['response']['numFound']
-          blacklight_query = alert.blacklight_query        
+        else   
+          # we are making an inclusive solr range search
+          run_from = alert.last_run + 1.second
 
-          update = true
-          if hit_count > 0          
-            begin             
-              params = {
-                :to => user.email,
-                :hit_count => hit_count,
-                :title => (alert.alert_type == "journal" ? alert.name : alert.query_text),
-                :type => alert.alert_type,
-                :last_run => last_run.strftime('%Y-%m-%d'),
-                :response => response['response']['docs'],
-                :query_url => blacklight_query
-              }
-              SendIt.send_alert_mail(params)                
-              alert_mails_sent += 1
-            rescue Exception => e
-              update = false
-              Rails.logger.warn "Mail for alert #{alert.inspect} could not be send: #{e.inspect}"
+          # don't bother running the query in the case where the max alert date in the index hasn't 
+          # changed since last run
+          if run_to >= run_from
+
+            response = solr.query(alert.solr_query, alert.alert_type, user.type, run_from, run_to)
+            hit_count = response['response']['numFound']
+            blacklight_query = alert.blacklight_query        
+
+            update = true
+            if hit_count > 0          
+              begin             
+                params = {
+                  :to => user.email,
+                  :hit_count => hit_count,
+                  :title => (alert.alert_type == "journal" ? alert.name : alert.query_text),
+                  :type => alert.alert_type,
+                  :last_run => run_from.strftime('%Y-%m-%d'),
+                  :response => response['response']['docs'],
+                  :query_url => blacklight_query
+                }
+                SendIt.send_alert_mail(params)                
+                alert_mails_sent += 1
+              rescue Exception => e
+                update = false
+                Rails.logger.warn "Mail for alert #{alert.inspect} could not be send: #{e.inspect}"
+              end
+            end
+            
+            if update
+              alert.alert_stats.build(:count => hit_count, :last_run => run_to)
+              alert.save
             end
           end
-          
-          if update
-            alert.alert_stats.build(:count => hit_count, :last_run => run_to)
-            alert.save
-          end
-          
         end
       end
 

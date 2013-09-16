@@ -47,7 +47,7 @@ describe Solr do
 
     it "fetches max alert date" do
       stub_request(:get, /#{Rails.application.config.solr[:url]}.*/).to_return(File.new("spec/fixtures/solr_max_alert_date.txt"))
-      expected_date = DateTime.new(2013, 8, 27, 22, 0, 10,'+0')
+      expected_date = DateTime.new(2013, 9, 12, 22, 0, 10,'+0')
       solr.max_alert_date.should eql expected_date
     end
   end
