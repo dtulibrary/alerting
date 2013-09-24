@@ -21,7 +21,6 @@
 
 set :output, "#{path}/log/#{environment}.log"
 
-#every :day, :at => '07:00am' do
-every 30.minutes do
+every :day, :at => '07:00am' do
   runner "AlertRunner.run_alerts"
 end
