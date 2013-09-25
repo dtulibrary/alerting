@@ -4,7 +4,6 @@ require 'rsolr'
 class Solr
   
   def initialize
-    @url = Rails.application.config.solr[:url]    
     @params = {
       :rows => Rails.application.config.solr[:rows],
       :qt => Rails.application.config.solr[:qt],
