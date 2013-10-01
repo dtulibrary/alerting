@@ -17,52 +17,58 @@ class AlertRunner
 
       Alert.alerts_to_run.each do |alert|       
 
-        # Notice journal alerts are not grouped together (which would reduce metastore searches)
-        # since the query needs to limited by the users access rights (user role could 
-        # change over time and should not be stored in the alerting app) and since it
-        # limits flexibility wrt setting frequency on individual alerts
+        begin
 
-        user = User.new({:id => alert.user_id})
-        
-        if user.email.nil?  
-          Rails.logger.warn "Email missing for #{alert.inspect}"
-        else   
-          # we are making an inclusive solr range search
-          run_from = alert.last_run + 1.second
+          # Notice journal alerts are not grouped together (which would reduce metastore searches)
+          # since the query needs to limited by the users access rights (user role could 
+          # change over time and should not be stored in the alerting app) and since it
+          # limits flexibility wrt setting frequency on individual alerts
 
-          # don't bother running the query in the case where the max alert date in the index hasn't 
-          # changed since last run
-          if run_to >= run_from
+          user = User.new({:id => alert.user_id})
+          
+          if user.email.nil?  
+            Rails.logger.warn "Email missing for #{alert.inspect}"
+          else   
+            # we are making an inclusive solr range search
+            run_from = alert.last_run + 1.second
 
-            response = solr.query(alert.solr_query, alert.alert_type, user.type, run_from, run_to)
-            hit_count = response['response']['numFound']
-            blacklight_query = alert.blacklight_query        
+            # don't bother running the query in the case where the max alert date in the index hasn't 
+            # changed since last run
+            if run_to >= run_from
 
-            update = true
-            if hit_count > 0          
-              begin             
-                params = {
-                  :to => user.email,
-                  :hit_count => hit_count,
-                  :title => (alert.alert_type == "journal" ? alert.name : alert.query_text),
-                  :type => alert.alert_type,
-                  :last_run => run_from.strftime('%Y-%m-%d'),
-                  :response => response['response']['docs'],
-                  :query_url => blacklight_query
-                }
-                SendIt.send_alert_mail(params)                
-                alert_mails_sent += 1
-              rescue Exception => e
-                update = false
-                Rails.logger.warn "Mail for alert #{alert.inspect} could not be send: #{e.inspect}"
+              response = solr.query(alert.solr_query, alert.alert_type, user.type, run_from, run_to)
+              hit_count = response['response']['numFound']
+              blacklight_query = alert.blacklight_query        
+
+              update = true
+              if hit_count > 0          
+                begin             
+                  params = {
+                    :to => user.email,
+                    :hit_count => hit_count,
+                    :title => (alert.alert_type == "journal" ? alert.name : alert.query_text),
+                    :type => alert.alert_type,
+                    :last_run => run_from.strftime('%Y-%m-%d'),
+                    :response => response['response']['docs'],
+                    :query_url => blacklight_query
+                  }
+                  SendIt.send_alert_mail(params)                
+                  alert_mails_sent += 1
+                rescue Exception => e
+                  update = false
+                  Rails.logger.warn "Mail for alert #{alert.inspect} could not be send: #{e.inspect}"
+                end
+              end
+              
+              if update
+                alert.alert_stats.build(:count => hit_count, :last_run => run_to)
+                alert.save
               end
             end
-            
-            if update
-              alert.alert_stats.build(:count => hit_count, :last_run => run_to)
-              alert.save
-            end
           end
+        rescue Exception => e
+          Rails.logger.error "Running alert #{alert.inspect} failed with #{e.message}"        
+          Rails.logger.error e.backtrace.join("\n")
         end
       end
 
