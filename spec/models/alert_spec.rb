@@ -69,7 +69,7 @@ describe Alert do
 
     it "creates a filter query parameter" do
       alert = FactoryGirl.create(:alert_facet_query)
-      alert.solr_query[:fq].first.should eq "format:article"      
+      alert.solr_query[:fq].first.should eq "{!term f=format}:article"      
     end
 
     it "creates range filter query parameter" do
@@ -79,8 +79,8 @@ describe Alert do
 
     it "creates multiple filter query parameters" do
       alert = FactoryGirl.create(:alert_multi_facet_query)
-      alert.solr_query[:fq].should include "format:article"
-      alert.solr_query[:fq].should include "author_facet:Lee"
+      alert.solr_query[:fq].should include "{!term f=format}:article"
+      alert.solr_query[:fq].should include "{!term f=author_facet}:Lee"
     end
 
     it "prepends a search query field to the query" do

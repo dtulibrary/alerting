@@ -46,9 +46,9 @@ class Alert < ActiveRecord::Base
         solr_params[:fq] = []
         query_params[:f].each do |facet, value|
           if value.is_a? Array
-            value.each {|v| solr_params[:fq] << "#{facet}:#{v}" }
+            value.each {|v| solr_params[:fq] << "{!term f=#{facet}}:#{v}" }
           else
-            solr_params[:fq] << "#{facet}:#{value}"
+            solr_params[:fq] << "{!term f=#{facet}}:#{value}"
           end
         end
       end
