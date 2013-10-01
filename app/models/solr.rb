@@ -26,9 +26,7 @@ class Solr
       # to avoid inclusion of back logs        
       params[:fq] = filter_queries
       params[:fq] << "pub_date_tis:[#{year_range}]"      
-      params[:sort] = ["journal_vol_sort desc"]
-      params[:sort] << "journal_issue_sort desc"
-      params[:sort] << "journal_page_start_tsort asc"
+      params[:sort] = "journal_vol_sort desc, journal_issue_sort desc, journal_page_start_tsort asc"
     else
       params = query      
       params[:fq] = [] unless params.key? :fq
