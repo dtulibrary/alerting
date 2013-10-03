@@ -19,9 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
-set :output, "#{path}/log/#{environment}.log"
+# set :output, "#{path}/log/#{environment}.log"
 
-#every :day, :at => '07:00am' do
-every 30.minutes do
-  runner "AlertRunner.run_alerts"
-end
+# every 30.minutes do
+#   runner "AlertRunner.run_alerts"
+# end
