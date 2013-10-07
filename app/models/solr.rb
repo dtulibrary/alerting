@@ -16,7 +16,8 @@ class Solr
     
     filter_queries = [
       "alert_timestamp_dt:[#{date_from.to_time.iso8601} TO #{date_to.to_time.iso8601}]",
-      "access_ss:#{user_type}"
+      "access_ss:#{user_type}",
+      "pub_date_tis:[#{((DateTime.now - 1.year).strftime '%Y').to_i} TO *]"
     ]
 
     params = {}
@@ -25,7 +26,6 @@ class Solr
       # only include articles in the range current year - 1 to current year + 1
       # to avoid inclusion of back logs        
       params[:fq] = filter_queries
-      params[:fq] << "pub_date_tis:[#{year_range}]"      
       params[:sort] = "journal_vol_sort desc, journal_issue_sort desc, journal_page_start_tsort asc"
     else
       params = query      
@@ -57,11 +57,6 @@ class Solr
   end
 
   private
-
-  def year_range
-    current_year = (DateTime.current.strftime '%Y').to_i
-    "#{current_year - 1} TO #{current_year + 1}"
-  end
 
   def send_query(params)
     connection.get 'select', :params => params    
