@@ -11,7 +11,7 @@ class SendIt
         Rails.logger.info "Sending mail request to SendIt: URL = #{url}, template = #{template}"
 
         default_params = {
-          :from => 'noreply@dtic.dtu.dk',
+          :from => 'findit@dtic.dtu.dk',
           :priority => 'now',
           :subject_prefix => Rails.application.config.send_it[:subject_prefix]
         }
