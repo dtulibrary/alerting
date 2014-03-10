@@ -2,18 +2,18 @@
 require 'rsolr'
 
 class Solr
-  
+
   def initialize
     @params = {
       :rows => Rails.application.config.solr[:rows],
       :qt => Rails.application.config.solr[:qt],
-      :fl => 'title_ts, cluster_id_ss, format, author_ts, pub_date_tis, journal_title_ts, journal_vol_ssf, journal_issue_ssf, journal_page_ssf',      
+      :fl => 'title_ts, cluster_id_ss, format, author_ts, pub_date_tis, journal_title_ts, journal_vol_ssf, journal_issue_ssf, journal_page_ssf',
       :facet => false
     }
   end
 
   def query(query, type, user_type, date_from, date_to)
-    
+
     filter_queries = [
       "alert_timestamp_dt:[#{date_from.to_time.iso8601} TO #{date_to.to_time.iso8601}]",
       "access_ss:#{user_type}",
@@ -21,14 +21,14 @@ class Solr
     ]
 
     params = {}
-    if type == "journal"      
+    if type == "journal"
       params[:q] = "issn_ss:#{query}"
       # only include articles in the range current year - 1 to current year + 1
-      # to avoid inclusion of back logs        
+      # to avoid inclusion of back logs
       params[:fq] = filter_queries
-      params[:sort] = "journal_vol_sort desc, journal_issue_sort desc, journal_page_start_tsort asc"
+      params[:sort] = "journal_vol_tsort desc, journal_issue_tsort desc, journal_page_start_tsort asc"
     else
-      params = query      
+      params = query
       params[:fq] = [] unless params.key? :fq
       params[:fq].concat(filter_queries)
     end
@@ -59,7 +59,7 @@ class Solr
   private
 
   def send_query(params)
-    connection.get 'select', :params => params    
+    connection.get 'select', :params => params
   end
 
   def connection
