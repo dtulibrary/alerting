@@ -70,9 +70,10 @@ module Keikoku
     }
 
     config.send_it = {
-      :url => 'http://localhost',
+      :url            => 'http://localhost',
       :subject_prefix => "",
-      :test_mode => true
+      :from           => '',
+      :test_mode      => true
     }
 
     config.find_it = {
