@@ -64,9 +64,8 @@ module Keikoku
     }
 
     config.solr = {
-      :url => 'http://localhost',      
+      :url => 'http://localhost:8983/solr/metastore',
       :rows => 50,
-      :qt => '/toshokan'
     }
 
     config.send_it = {

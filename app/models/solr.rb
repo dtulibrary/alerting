@@ -6,7 +6,6 @@ class Solr
   def initialize
     @params = {
       :rows => Rails.application.config.solr[:rows],
-      :qt => Rails.application.config.solr[:qt],
       :fl => 'title_ts, cluster_id_ss, format, author_ts, pub_date_tis, journal_title_ts, journal_vol_ssf, journal_issue_ssf, journal_page_ssf',
       :facet => false
     }
@@ -45,7 +44,6 @@ class Solr
       :sort => "alert_timestamp_dt desc",
       :fl => "alert_timestamp_dt",
       :facet => false,
-      :qt => Rails.application.config.solr[:qt]
     })
     max_alert_date = DateTime.current
     if response['response']['numFound'] > 1
@@ -59,7 +57,7 @@ class Solr
   private
 
   def send_query(params)
-    connection.get 'select', :params => params
+    connection.get 'toshokan', :params => params
   end
 
   def connection
