@@ -17,7 +17,8 @@ class SendIt
         }
 
         response = HTTParty.post url, {
-          :body => default_params.deep_merge(params).to_json,
+          :timeout => Rails.applications.config.send_it[:timeout],
+          :body    => default_params.deep_merge(params).to_json,
           :headers => { 'Content-Type' => 'application/json' }
         }
 

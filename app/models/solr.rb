@@ -57,11 +57,11 @@ class Solr
   private
 
   def send_query(params)
-    connection.get 'toshokan', :params => params
+    connection.get 'toshokan', params: params
   end
 
   def connection
-    @solr ||= RSolr.connect :url => Rails.application.config.solr[:url]
+    @solr ||= RSolr.connect(url: Rails.application.config.solr[:url], read_timeout: 10*60, open_timeout: 10*60)
   end
 
 end

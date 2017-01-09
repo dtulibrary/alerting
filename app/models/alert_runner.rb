@@ -40,7 +40,6 @@ class AlertRunner
               hit_count = response['response']['numFound']
               blacklight_query = alert.blacklight_query        
 
-              update = true
               if hit_count > 0          
                 begin             
                   params = {
@@ -54,16 +53,13 @@ class AlertRunner
                   }
                   SendIt.send_alert_mail(params)                
                   alert_mails_sent += 1
-                rescue Exception => e
-                  update = false
+                  alert.alert_stats.build(count: hit_count, last_run: run_to)
+                  alert.save
+                rescue => e
                   Rails.logger.warn "Mail for alert #{alert.inspect} could not be send: #{e.inspect}"
                 end
               end
               
-              if update
-                alert.alert_stats.build(:count => hit_count, :last_run => run_to)
-                alert.save
-              end
             end
           end
         rescue Exception => e

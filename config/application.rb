@@ -72,6 +72,7 @@ module Keikoku
       :url            => 'http://localhost',
       :subject_prefix => "",
       :from           => '',
+      :timeout        => 10*60,
       :test_mode      => true
     }
 
